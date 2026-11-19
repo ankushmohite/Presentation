@@ -43,6 +43,34 @@ If the application transfers large images, maps, videos or datasets, do not rout
 Proposed flow:
 User → CloudFront → S3.
 
+Store large files in S3.
+CloudFront fetches files from S3 when they are not already cached.
+CloudFront caches eligible content.
+Other users can receive cached content from nearby edge locations.
+Application pods handle business logic instead of transferring every large file.
+
+
+
+
+### AWS Cost Optimization
+
+1. **Right-size EC2 instances:** Select suitable instance types based on CPU and memory requirements.
+
+2. **Auto Scaling:** Use Autoscalling to deploy more Node when load goes above threshold value and remove node when load goes below threshold value.
+
+3. **Use Savings Plans or Reserved Instances:**
+4. If your application requires EC2 instances continuously, consider Savings Plans or Reserved Instances for predictable usage.
+
+6. **EBS Optimization:** Remove unused volumes and snapshots, and select suitable storage types.
+
+7. **S3 Optimization:** Use Lifecycle Policies to move old data to cheaper storage classes.
+
+8. **NAT Gateway Optimization:** Use VPC Endpoints to avoid unnecessary NAT Gateway processing charges.
+
+9. **CloudFront CDN:** Cache reusable content and reduce repeated requests to the origin.
+
+
+
 
 ## Requirement.              Solution.
 
@@ -54,34 +82,4 @@ Network capacity	           Proper EC2 network performance and load testing.
 
 
 
-
-<img width="1348" height="940" alt="image" src="https://github.com/user-attachments/assets/58f1d94d-76ba-485f-9bc6-ae3fc347533d" />
-
-
-
-
-
-
-
-## Architecture and Cost Optimization Summary
-
-For our proposed solution, I recommend Amazon EKS with a multi-AZ architecture.
-
-We will create one VPC across three Availability Zones, with three public subnets, three private application subnets and three private database subnets.
-
-We will use ALB to distribute incoming traffic across healthy application instances.
-
-HPA will scale the application pods, and Karpenter will provision additional EC2 worker nodes when existing capacity is insufficient.
-
-For low latency, we will use CloudFront, Redis caching, database optimization and compression.
-
-## For high data transfer, we will store large images, maps and datasets in S3 and deliver them through CloudFront instead of routing all large files through Kubernetes pods.
-
-## For egress cost optimization, we will improve CDN caching, reduce unnecessary data transfer, use VPC endpoints and avoid unnecessary cross-AZ communication.
-
-For high availability, we will distribute application workloads across three Availability Zones and use multiple replicas, health checks and database failover.
-
-Our goal is to support 25,000 concurrent users with good performance, high availability and optimized infrastructure costs.
-
-We will validate the final capacity and cost through load testing and AWS Pricing Calculator estimates.
 
