@@ -63,7 +63,7 @@ Network capacity	           Proper EC2 network performance and load testing.
 
 
 
-##Architecture and Cost Optimization Summary
+## Architecture and Cost Optimization Summary
 
 For our proposed solution, I recommend Amazon EKS with a multi-AZ architecture.
 
@@ -75,9 +75,9 @@ HPA will scale the application pods, and Karpenter will provision additional EC2
 
 For low latency, we will use CloudFront, Redis caching, database optimization and compression.
 
-For high data transfer, we will store large images, maps and datasets in S3 and deliver them through CloudFront instead of routing all large files through Kubernetes pods.
+## For high data transfer, we will store large images, maps and datasets in S3 and deliver them through CloudFront instead of routing all large files through Kubernetes pods.
 
-For egress cost optimization, we will improve CDN caching, reduce unnecessary data transfer, use VPC endpoints and avoid unnecessary cross-AZ communication.
+## For egress cost optimization, we will improve CDN caching, reduce unnecessary data transfer, use VPC endpoints and avoid unnecessary cross-AZ communication.
 
 For high availability, we will distribute application workloads across three Availability Zones and use multiple replicas, health checks and database failover.
 
