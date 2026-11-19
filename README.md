@@ -49,13 +49,39 @@ User → CloudFront → S3.
 Large images and maps	       S3
 Fast content delivery	       CloudFront
 Frequently accessed data	   Redis
-Network capacity	           Proper EC2 network performance and load testing
+Network capacity	           Proper EC2 network performance and load testing.
 
 
 
 
 
-![Uploading image.png…]()
+<img width="1348" height="940" alt="image" src="https://github.com/user-attachments/assets/58f1d94d-76ba-485f-9bc6-ae3fc347533d" />
 
 
+
+
+
+
+
+##Architecture and Cost Optimization Summary
+
+For our proposed solution, I recommend Amazon EKS with a multi-AZ architecture.
+
+We will create one VPC across three Availability Zones, with three public subnets, three private application subnets and three private database subnets.
+
+We will use ALB to distribute incoming traffic across healthy application instances.
+
+HPA will scale the application pods, and Karpenter will provision additional EC2 worker nodes when existing capacity is insufficient.
+
+For low latency, we will use CloudFront, Redis caching, database optimization and compression.
+
+For high data transfer, we will store large images, maps and datasets in S3 and deliver them through CloudFront instead of routing all large files through Kubernetes pods.
+
+For egress cost optimization, we will improve CDN caching, reduce unnecessary data transfer, use VPC endpoints and avoid unnecessary cross-AZ communication.
+
+For high availability, we will distribute application workloads across three Availability Zones and use multiple replicas, health checks and database failover.
+
+Our goal is to support 25,000 concurrent users with good performance, high availability and optimized infrastructure costs.
+
+We will validate the final capacity and cost through load testing and AWS Pricing Calculator estimates.
 
